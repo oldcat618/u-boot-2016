@@ -164,7 +164,7 @@ jobs:
         ls -la *.zip
         echo "Individual zip packaging with timestamp completed!"
 
-   - name: 发布固件至Release
+     - name: 发布固件至Release
       uses: softprops/action-gh-release@v1.1.0
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
@@ -174,14 +174,7 @@ jobs:
         release_name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         tag_name: ${{ steps.tag.outputs.release_tag }}
-        body_path: release.txt
-          Automated U-Boot build for IPQ platforms
-          - Built from commit: ${{ github.sha }}
-          - Build number: ${{ github.run_number }}
-          - Date: ${{ github.event.head_commit.timestamp }}
-          - Build timestamp: $TIMESTAMP
-
-          Supported IPQ platforms:
+        Supported IPQ platforms:
           - ipq40xx
           - ipq5018
           - ipq5332
