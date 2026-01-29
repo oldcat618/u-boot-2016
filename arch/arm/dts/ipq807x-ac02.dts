@@ -69,7 +69,7 @@
 		};
 		key_gpio {
 			reset {
-				gpio = <66>;
+				gpio = <27>;
 				func = <0>;
 				drvstr = <GPIO_8MA>;
 				pull = <GPIO_PULL_UP>;
