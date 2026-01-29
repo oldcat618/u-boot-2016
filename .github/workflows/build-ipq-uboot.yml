@@ -174,15 +174,5 @@ jobs:
         release_name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         tag_name: ${{ steps.tag.outputs.release_tag }}
-        Supported IPQ platforms:
-          - ipq40xx
-          - ipq5018
-          - ipq5332
-          - ipq6018
-          - ipq807x
-          - ipq9574
-
-          Each U-Boot file is individually packaged with ultra compression (zip -9) and timestamp.
-        files: u-boot-2016/bin/openwrt-*-u-boot-*.zip
         draft: false
         prerelease: false
