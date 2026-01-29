@@ -164,15 +164,28 @@ jobs:
         ls -la *.zip
         echo "Individual zip packaging with timestamp completed!"
 
-     - name: 发布固件至Release
-      uses: softprops/action-gh-release@v1.1.0
-      if: steps.tag.outputs.status == 'success' && !cancelled()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create GitHub Release
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      uses: softprops/action-gh-release@v1
       with:
-        files: u-boot-2016/upload/*
-        release_name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
-        name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
-        tag_name: ${{ steps.tag.outputs.release_tag }}
+        tag_name: v${{ github.run_number }}
+        name: U-Boot Build ${{ github.run_number }}
+        body: |
+          Automated U-Boot build for IPQ platforms
+          - Built from commit: ${{ github.sha }}
+          - Build number: ${{ github.run_number }}
+          - Date: ${{ github.event.head_commit.timestamp }}
+          - Build timestamp: $TIMESTAMP
+
+          Supported IPQ platforms:
+          - ipq40xx
+          - ipq5018
+          - ipq5332
+          - ipq6018
+          - ipq807x
+          - ipq9574
+
+          Each U-Boot file is individually packaged with ultra compression (zip -9) and timestamp.
+        files: u-boot-2016/bin/openwrt-*-u-boot-*.zip
         draft: false
         prerelease: false
